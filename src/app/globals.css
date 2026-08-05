@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Clay brand palette */
+    --canvas: 40 100% 97%;
+    --surface-soft: 42 50% 95%;
+    --surface-card: 44 33% 92%;
+    --surface-strong: 44 22% 89%;
+    --surface-dark: 180 40% 7%;
+    --surface-dark-elevated: 180 20% 14%;
+
+    --ink: 0 0% 4%;
+    --body-strong: 0 0% 10%;
+    --body: 0 0% 23%;
+    --muted: 0 0% 42%;
+    --muted-soft: 0 0% 60%;
+    --hairline: 0 0% 90%;
+    --on-dark: 0 0% 100%;
+
+    --brand-pink: 340 100% 65%;
+    --brand-teal: 180 37% 17%;
+    --brand-lavender: 257 68% 79%;
+    --brand-peach: 24 100% 76%;
+    --brand-ochre: 42 78% 60%;
+    --brand-mint: 161 38% 74%;
+    --brand-coral: 6 100% 68%;
+
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+    --error: 0 84% 60%;
+
+    /* shadcn semantic mapping */
+    --background: var(--canvas);
+    --foreground: var(--ink);
+    --card: var(--surface-card);
+    --card-foreground: var(--ink);
+    --popover: var(--surface-card);
+    --popover-foreground: var(--ink);
+    --primary: var(--ink);
+    --primary-foreground: var(--on-dark);
+    --secondary: var(--surface-soft);
+    --secondary-foreground: var(--ink);
+    /* --muted is a readable gray text token here (text-muted is used ~40× as
+       caption text and bg-muted is never used), so do NOT alias it to a
+       surface — that made captions near-invisible. The gray from line 18
+       stands. */
+    --muted-foreground: var(--muted);
+    --accent: var(--brand-lavender);
+    --accent-foreground: var(--ink);
+    --destructive: var(--error);
+    --destructive-foreground: var(--on-dark);
+    --border: var(--hairline);
+    --input: var(--surface-card);
+    --ring: var(--ink);
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark surface ramp — mirrors the light ramp's elevation order so the same
+       utility classes (bg-canvas / bg-surface-soft / -card / -strong) produce a
+       coherent dark hierarchy instead of staying near-white. */
+    --canvas: 180 40% 6%;
+    --surface-soft: 180 30% 10%;
+    --surface-card: 180 22% 13%;
+    --surface-strong: 180 18% 17%;
+    --surface-dark: 180 40% 7%;
+    --surface-dark-elevated: 180 20% 14%;
+
+    /* Text flips to light. --on-dark is the foreground placed on light accent
+       fills (brand tiles, ink buttons), so it flips to dark to keep contrast. */
+    --ink: 0 0% 96%;
+    --body-strong: 0 0% 88%;
+    --body: 0 0% 74%;
+    --muted: 0 0% 60%;
+    --muted-soft: 0 0% 70%;
+    --hairline: 180 14% 24%;
+    --on-dark: 0 0% 8%;
+
+    /* Brand accents: teal/coral/pink are used both as accent text AND as fills
+       with text-on-dark, so they lighten to read on dark surfaces. ochre/
+       lavender/peach/mint are used only as fills paired with text-ink, so they
+       darken enough for light ink text to stay legible on them. */
+    --brand-pink: 340 85% 70%;
+    --brand-teal: 180 65% 52%;
+    --brand-lavender: 257 45% 52%;
+    --brand-peach: 28 80% 52%;
+    --brand-ochre: 38 70% 48%;
+    --brand-mint: 161 40% 48%;
+    --brand-coral: 8 85% 66%;
+
+    --success: 142 60% 55%;
+    --warning: 38 90% 58%;
+    --error: 0 72% 62%;
+
+    /* shadcn semantic aliases kept in lockstep with the Clay tokens the app
+       actually uses, so shadcn primitives theme alongside the Clay utilities
+       (the old block only flipped these, leaving the Clay surfaces white). */
+    --background: var(--canvas);
+    --foreground: var(--ink);
+    --card: var(--surface-card);
+    --card-foreground: var(--ink);
+    --popover: var(--surface-card);
+    --popover-foreground: var(--ink);
+    --primary: var(--ink);
+    --primary-foreground: var(--on-dark);
+    --secondary: var(--surface-soft);
+    --secondary-foreground: var(--ink);
+    --muted-foreground: var(--muted);
+    --accent: var(--brand-teal);
+    --accent-foreground: var(--on-dark);
+    --destructive: var(--error);
+    --destructive-foreground: var(--on-dark);
+    --border: var(--hairline);
+    --input: var(--surface-card);
+    --ring: var(--brand-teal);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
