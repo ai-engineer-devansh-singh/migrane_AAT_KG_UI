@@ -123,14 +123,19 @@ function CategoryMeanChart({ data }: { data: BenchmarkResponse }) {
   });
 
   const maxV = 12;
-  const chartW = 460;
-  const chartH = 180;
-  const padL = 28;
-  const padB = 40;
-  const padT = 10;
-  const plotW = chartW - padL - 10;
-  const plotH = chartH - padB - padT;
   const n = means.length;
+  const padL = 28;
+  const padR = 10;
+  const padB = 88;
+  const padT = 10;
+  // Room to the left of the y-axis for the first rotated label to overhang into.
+  const overhangL = 26;
+  // Widen the viewBox with the category count so labels keep a fixed slot, and
+  // scroll (rather than squeeze) when they no longer fit.
+  const plotW = Math.max(422, n * 42);
+  const chartH = 224;
+  const chartW = plotW + padL + padR;
+  const plotH = chartH - padB - padT;
   const slot = n ? plotW / n : plotW;
   const barW = Math.min(18, slot * 0.32);
 
@@ -151,11 +156,17 @@ function CategoryMeanChart({ data }: { data: BenchmarkResponse }) {
           <p className="text-body-sm text-muted">No scored answers available yet.</p>
         ) : (
           <div className="overflow-x-auto">
-            <svg viewBox={`0 0 ${chartW} ${chartH}`} className="h-auto w-full min-w-[420px]" role="img" aria-label="Mean CRS by category">
+            <svg
+              viewBox={`${-overhangL} 0 ${chartW + overhangL} ${chartH}`}
+              className="h-auto w-full"
+              style={{ minWidth: chartW + overhangL }}
+              role="img"
+              aria-label="Mean CRS by category"
+            >
               {/* y-axis gridlines */}
               {[0, 3, 6, 9, 12].map((tick) => (
                 <g key={tick}>
-                  <line x1={padL} y1={y(tick)} x2={chartW - 10} y2={y(tick)} className="stroke-hairline" strokeWidth="1" />
+                  <line x1={padL} y1={y(tick)} x2={padL + plotW} y2={y(tick)} className="stroke-hairline" strokeWidth="1" />
                   <text x={padL - 4} y={y(tick) + 3} textAnchor="end" className="fill-muted" fontSize="9">{tick}</text>
                 </g>
               ))}
@@ -169,8 +180,15 @@ function CategoryMeanChart({ data }: { data: BenchmarkResponse }) {
                     {m.focus !== null && (
                       <rect x={cx + 1} y={y(m.focus)} width={barW} height={padT + plotH - y(m.focus)} className="fill-brand-mint" rx={2} />
                     )}
-                    <text x={cx} y={chartH - padB + 14} textAnchor="middle" className="fill-muted" fontSize="9">
-                      {m.cat.length > 14 ? m.cat.slice(0, 12) + '…' : m.cat}
+                    <text
+                      x={cx}
+                      y={chartH - padB + 12}
+                      textAnchor="end"
+                      transform={`rotate(-40 ${cx} ${chartH - padB + 12})`}
+                      className="fill-muted"
+                      fontSize="9"
+                    >
+                      {m.cat.length > 22 ? m.cat.slice(0, 21) + '…' : m.cat}
                     </text>
                   </g>
                 );
