@@ -30,10 +30,10 @@ interface SubgraphGraphProps {
   className?: string;
 }
 
-// Assertion edge colours mirror the TripleBadge palette (present→teal,
-// absent→coral, possible→ochre) so the graph and the fact badges read as one
-// system. Light values are the originals; dark values are brightened so edges
-// stay visible on a dark canvas.
+// Assertion edge colours mirror the TripleBadge palette (present teal, absent
+// coral, possible ochre) so the graph and the fact badges read as one system.
+// Light values are the originals, dark values brightened to stay visible on a
+// dark canvas.
 const ASSERTION_COLORS_LIGHT: Record<string, string> = {
   present: '#14b8a6', // teal
   absent: '#f0684f', // brand-coral
@@ -194,9 +194,8 @@ export function SubgraphGraph({ triples, topKNodes, onFilterFacts, className }: 
             },
           },
           {
-            // Per-node seed sizing by retrieval similarity is applied
-            // imperatively after layout (see loop below) because the static
-            // stylesheet cannot read a per-element numeric ramp.
+            // Sized imperatively after layout (see below) since a static
+            // stylesheet can't read a per-element numeric ramp.
             selector: 'node[?similarity]',
             style: {
               width: 42,
@@ -277,9 +276,9 @@ export function SubgraphGraph({ triples, topKNodes, onFilterFacts, className }: 
         }
       });
 
-      // Hover: dim everything outside the node's closed neighbourhood so the
-      // 1-hop subgraph around the pointer is emphasised (desktop enhancement;
-      // tap still drives fact-filtering on touch devices).
+      // On hover, dim everything outside the node's closed neighbourhood to
+      // emphasise its 1-hop subgraph. Desktop only; tap still drives
+      // fact-filtering on touch devices.
       cy.on('mouseover', 'node', (evt: cytoscape.EventObject) => {
         const node = evt.target;
         cy.elements().not(node.closedNeighborhood()).addClass('dimmed');

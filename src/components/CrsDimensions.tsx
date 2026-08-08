@@ -10,7 +10,7 @@ interface CrsDimensionsProps {
   className?: string;
 }
 
-// CRS rubric dimensions, each scored 0–3. Order matches the benchmark legend.
+// CRS rubric dimensions, each scored 0-3. Order matches the benchmark legend.
 const DIMENSIONS = [
   { key: 'accuracy', label: 'Acc', color: 'bg-brand-teal' },
   { key: 'hallucination', label: 'Halluc', color: 'bg-brand-coral' },
